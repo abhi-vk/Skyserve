@@ -4,17 +4,18 @@
     <div class="dashboard-container">
       <div class="map-wrapper">
         <!-- FileUpload Component -->
-        <FileUpload 
-          @fileUploaded="handleFileUpload" 
-          @error="handleFileError" 
-        />
+        <FileUpload @fileUploaded="handleFileUpload" @error="handleFileError" />
 
         <!-- MapComponent -->
-        <MapComponent 
-          :geojsonData="geojsonData" 
-          :kmlData="kmlData" 
-          @mapReady="onMapReady" 
+        <MapComponent
+          :geojsonData="geojsonData"
+          :kmlData="kmlData"
+          @mapReady="onMapReady"
+          @dataSaved="fetchSavedData"
         />
+
+        <!-- SavedDataCards Component -->
+        <SavedDataCards @data-selected="handleSelectedData" />
 
         <!-- Error Display -->
         <div v-if="errorMessage" class="error-message">
@@ -29,6 +30,7 @@
 import Navbar from "../components/Navbar.vue";
 import FileUpload from "../components/FileUpload.vue";
 import MapComponent from "../components/Map.vue";
+import SavedDataCards from "../components/SavedDataCards.vue"; // Import the SavedDataCards component
 
 export default {
   name: "Dashboard",
@@ -36,31 +38,32 @@ export default {
     Navbar,
     FileUpload,
     MapComponent,
+    SavedDataCards, 
   },
   data() {
     return {
       geojsonData: null,
       kmlData: null,
       errorMessage: null,
-      mapInstance: null, // Reference to the map instance for advanced features
+      mapInstance: null, 
     };
   },
   methods: {
     handleFileUpload(fileContent) {
-      this.errorMessage = null; // Clear previous errors
+      this.errorMessage = null;
       if (fileContent.type === "geojson") {
-        this.geojsonData = fileContent.data; // Update GeoJSON data
-        this.zoomToBounds(this.geojsonData); // Adjust map view
+        this.geojsonData = fileContent.data;
+        this.zoomToBounds(this.geojsonData); 
       } else if (fileContent.type === "kml") {
-        this.kmlData = fileContent.data; // Update KML data
-        this.zoomToKMLBounds(this.kmlData); // Adjust map view (if implemented)
+        this.kmlData = fileContent.data; 
+        this.zoomToKMLBounds(this.kmlData); 
       }
     },
     handleFileError(error) {
-      this.errorMessage = error; // Show error message
+      this.errorMessage = error; 
     },
     onMapReady(mapInstance) {
-      this.mapInstance = mapInstance; // Capture the map instance for later use
+      this.mapInstance = mapInstance; 
     },
     zoomToBounds(geojsonData) {
       if (this.mapInstance && geojsonData) {
@@ -70,8 +73,14 @@ export default {
       }
     },
     zoomToKMLBounds(kmlData) {
-      // Handle zooming for KML data (if required, you can convert KML to GeoJSON first)
+      
       console.log("Zoom to KML bounds - functionality to be implemented.");
+    },
+
+   
+    handleSelectedData(selectedData) {
+      console.log("Selected data:", selectedData);
+      
     },
   },
 };
