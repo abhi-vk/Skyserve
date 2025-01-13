@@ -22,9 +22,8 @@
           </button>
           <button
             class="btn btn-success ms-2"
-            :disabled="!isUserLoggedIn"
             @click="handleSaveGeoJSON"
-            :title="!isUserLoggedIn ? 'Please log in to save your data.' : ''"
+            :disabled="isSaveDisabled"
           >
             Save GeoJSON
           </button>
