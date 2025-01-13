@@ -3,7 +3,7 @@ import { useToast } from 'vue-toastification';
 
 const baseURL = import.meta.env.VITE_API_BASE_URL;  // Ensure that this is set in your .env file
 
-// Handle API responses (can customize these functions as needed)
+
 const handleApiRes = (data, toast) => {
   toast.success(data.msg || 'Operation successful');
 };
@@ -75,7 +75,7 @@ export const getAllSavedDataApi = async (router) => {
       handleApiRes(response.data, toast);
     }
   } catch (error) {
-    handleApiErr(error, toast);
+    handleApiErr(error);
   }
 };
 
