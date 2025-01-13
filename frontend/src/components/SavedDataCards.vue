@@ -26,7 +26,7 @@
             class="card shadow-sm border-light rounded-3 h-100"
             @click="selectSavedData(item)"
           >
-            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center p-3">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center p-3">
               <h5 class="mb-0">{{ getGeometryType(item) }}</h5>
               <div>
                 <button
@@ -116,6 +116,7 @@
           if (success) {
             toast.success("Data deleted successfully");
             this.fetchSavedData(); // Refresh the data list after deletion
+            window.location.reload();
           }
         } catch (error) {
           toast.error("Error deleting data");
